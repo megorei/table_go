@@ -1,5 +1,6 @@
 module TableGo
   class Formatter
+    extend ActionView::Helpers::NumberHelper
 
     class MissingFormatterError < StandardError; end
 
@@ -39,6 +40,12 @@ module TableGo
     formatters.store(:euro_currency,
       lambda do |value, record, column|
         sprintf("€ %01.2f", value).gsub('.', ',')
+      end
+    )
+
+    formatters.store(:currency,
+      lambda do |value, record, column|
+        number_to_currency(value)
       end
     )
 
