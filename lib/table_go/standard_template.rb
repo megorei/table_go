@@ -14,7 +14,7 @@ module TableGo
       thead do
         tr do
           source_table.columns.each do |column|
-            td label_for_column(column), html_options_for_header(column)
+            th label_for_column(column), html_options_for_header(column)
           end
         end
       end
