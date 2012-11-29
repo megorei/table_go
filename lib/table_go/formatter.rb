@@ -33,19 +33,13 @@ module TableGo
 
     formatters.store(:percent,
       lambda do |value, record, column|
-        sprintf("%01.2f%", value)
-      end
-    )
-
-    formatters.store(:euro_currency,
-      lambda do |value, record, column|
-        sprintf("€ %01.2f", value).gsub('.', ',')
+        number_to_percentage(value, column.as_options)
       end
     )
 
     formatters.store(:currency,
       lambda do |value, record, column|
-        number_to_currency(value)
+        number_to_currency(value, column.as_options)
       end
     )
 
