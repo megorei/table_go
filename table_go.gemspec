@@ -5,8 +5,8 @@ Gem::Specification.new do |s|
   s.summary     = 'rock the table'
   s.description = 'ok'
   s.authors     = ['Lars Gollnow', 'Vladimir Glusic']
-  s.email       = 'misc@mfind.de'
-  s.files       = ["lib/hola.rb"]
+  s.email       = ['lg@megorei.com', 'exsemt@gmail.com']
+  s.files       = Dir.glob("{lib}/**/*")
   s.homepage    = 'http://rubygems.org/gems/table_go'
 
   s.add_dependency "actionpack"
