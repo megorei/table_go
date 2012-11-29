@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'table_go'
-  s.version     = '0.0.4'
+  s.version     = '0.0.5'
   s.date        = '2012-11-28'
   s.summary     = 'rock the table'
   s.description = 'ok'
