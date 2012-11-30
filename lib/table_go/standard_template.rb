@@ -1,16 +1,19 @@
 module TableGo
-  class StandardTemplate < TemplateBase
+  class StandardTemplate < Minimal::Template
+    include TemplateBase
 
-    def render_table
+    alias :render_template :_render
+
+    def content
       table table_html do
         caption title if title
-        render_table_head
-        render_table_body
-        # render_table_foot
+        table_head
+        table_body
+        # table_foot
       end
     end
 
-    def render_table_head
+    def table_head
       thead do
         tr do
           source_table.columns.each do |column|
@@ -20,7 +23,7 @@ module TableGo
       end
     end
 
-    def render_table_body
+    def table_body
       tbody do
         source_table.collection.each do |record|
           tr html_options_for_row(record) do
@@ -33,7 +36,7 @@ module TableGo
       end
     end
 
-    def render_table_foot
+    def table_foot
       tfoot do
         tr do
         end

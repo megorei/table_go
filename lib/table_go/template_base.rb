@@ -1,7 +1,12 @@
 module TableGo
-  class TemplateBase < Minimal::Template
+  module TemplateBase
+    extend ActiveSupport::Concern
 
-    attr_accessor :source_table
+    included do
+      attr_accessor :source_table
+    end
+
+
 
     def title
       locals[:title]
@@ -15,16 +20,12 @@ module TableGo
       locals[:row_html]
     end
 
-    def content
-      render_table
-    end
-
     def label_for_column(column)
       column.label || begin
         if column.method && reflection = source_table.model_klass.reflections[column.name]
           reflection.klass.human_attribute_name(column.method).html_safe
         else
-          source_table.model_klass.human_attribute_name(column.name).html_safe
+          column.human_attribute_name
         end
       end
     end

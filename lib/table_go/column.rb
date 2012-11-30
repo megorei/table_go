@@ -1,9 +1,9 @@
 module TableGo
   class Column
-    attr_accessor :name, :options, :block
+    attr_accessor :table, :name, :options, :block
 
-    def initialize(name, options = {}, &block)
-      @name, @options, @block = name, options, block
+    def initialize(table, name, options = {}, &block)
+      @table, @name, @options, @block = table, name, options, block
     end
 
     def label
@@ -28,6 +28,14 @@ module TableGo
 
     def method
       options[:method]
+    end
+
+    def human_attribute_name
+      if table.model_klass.respond_to?(:human_attribute_name)
+        table.model_klass.human_attribute_name(name).html_safe
+      else
+        name.to_s.humanize
+      end
     end
 
   end
