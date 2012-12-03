@@ -20,9 +20,9 @@ module TableGo
       end
     end
 
-    def model_klass_reflection_keys
-      @model_klass_reflection_keys ||= model_klass.reflections.keys
-    end
+    # def model_klass_reflection_keys
+    #   @model_klass_reflection_keys ||= model_klass.reflections.keys
+    # end
 
     def attribute_names_from_model_klass
       model_klass.respond_to?(:column_names) ? model_klass.column_names : []

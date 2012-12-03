@@ -23,10 +23,6 @@ class Article < OpenStruct
   extend ActiveModel::Naming
   extend ActiveModel::Translation
 
-  def id
-    1
-  end
-
   def self.column_names
     [:id, :title]
   end
