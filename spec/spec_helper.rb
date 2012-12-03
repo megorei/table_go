@@ -24,7 +24,8 @@ class Article < OpenStruct
   extend ActiveModel::Translation
 
   def self.column_names
-    [:id, :title]
+    [:id, :title, :date_of_order, :vat, :price, :xmas_bonus]
   end
 
 end
+
