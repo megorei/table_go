@@ -1,6 +1,7 @@
 # TableGo
 
-TODO: Write a gem description
+simple, flexible and fast html table generator
+
 
 ## Installation
 
@@ -21,7 +22,7 @@ Or install it yourself as:
 
 example in HAML
 
-  = table_go_for @orders, Order,
+ table_go_for @orders, Order,
     :title => 'one Table',
     :table_html => { :id => :the_table },
     :row_html   => { :class => lambda { cycle('even', 'odd') },
