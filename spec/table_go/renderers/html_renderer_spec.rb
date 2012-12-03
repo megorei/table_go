@@ -1,7 +1,7 @@
 # encoding: UTF-8
 require 'spec_helper'
 
-describe TableGo::Helpers do
+describe TableGo::Renderers::HtmlRenderer do
 
   let(:articles) do
     [ Article.new(:title => 'iPutz', :date_of_order => Date.new(2012), :id => 1, :vat => 19, :price => 5, :xmas_bonus => true),
