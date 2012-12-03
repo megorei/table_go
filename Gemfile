@@ -12,3 +12,6 @@ end
 group :test do
 end
 
+
+# Specify your gem's dependencies in table_go.gemspec
+# gemspec

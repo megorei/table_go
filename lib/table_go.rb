@@ -1,3 +1,5 @@
+require "table_go/version"
+
 module TableGo
   autoload :Table, 'table_go/table'
   autoload :Columns, 'table_go/columns'
