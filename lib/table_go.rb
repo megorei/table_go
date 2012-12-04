@@ -1,4 +1,4 @@
-require "table_go/version"
+require 'table_go/version'
 
 module TableGo
   autoload :Table, 'table_go/table'
@@ -11,8 +11,20 @@ module TableGo
 
 
   def self.render_html(collection, model_klass, template, options = {}, &block)
-    table = Table.new(collection, model_klass, &block)
-    TableRenderer.new(template, table, TableGo::Renderers::HtmlRenderer).render(options)
+    render(collection, model_klass, TableGo::Renderers::HtmlRenderer, template, options, &block)
+  end
+
+  def self.render_csv(collection, model_klass, options = {}, &block)
+    render(collection, model_klass, TableGo::Renderers::CsvRenderer, nil, options, &block)
+  end
+
+  def self.render(collection, model_klass, renderer_klass, template, options = {}, &block)
+    table     = Table.new(collection, model_klass, &block)
+    renderer  = TableRenderer.new(table)
+    renderer.renderer_klass = renderer_klass
+    renderer.template       = template
+    renderer.apply_options(options)
+    renderer.render_template
   end
 
 end

@@ -16,6 +16,10 @@ class String
   def cleanup_html
     self.gsub(/\n/,'').gsub(/>\s*</, "><").strip
   end
+
+  def cleanup_csv
+    self.strip.gsub(/\n\s*/, "\n")
+  end
 end
 
 
@@ -24,7 +28,7 @@ class Article < OpenStruct
   extend ActiveModel::Translation
 
   def self.column_names
-    [:id, :title, :date_of_order, :vat, :price, :xmas_bonus]
+    [:ident, :title, :date_of_order, :vat, :price, :xmas_bonus]
   end
 
 end

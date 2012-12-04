@@ -4,7 +4,17 @@ module TableGo
       extend ActiveSupport::Concern
 
       included do
-        attr_accessor :source_table, :title, :table_html, :row_html
+        attr_accessor :source_table, :title, :table_html, :row_html, :template
+      end
+
+      def apply_options(options)
+        self.title      = options.delete(:title)
+        self.table_html = options.delete(:table_html)
+        self.row_html   = options.delete(:row_html)
+      end
+
+      def render_template
+        raise ArgumentError.new('implement #render_template in concrete renderer')
       end
 
 

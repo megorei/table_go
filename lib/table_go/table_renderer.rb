@@ -1,14 +1,17 @@
 module TableGo
-
   class TableRenderer
+    attr_accessor :renderer_klass, :template
+    delegate      :apply_options, :render_template, :to => :renderer
 
-    def initialize(template_args, source_table, renderer_klass)
-      @renderer = renderer_klass.new(template_args)
-      @renderer.source_table = source_table
+    def initialize(source_table)
+      @source_table = source_table
     end
 
-    def render(options = {})
-      @renderer.render_template(options)
+    def renderer
+      @renderer ||= renderer_klass.new.tap do |r|
+        r.template     = template
+        r.source_table = @source_table
+      end
     end
 
   end

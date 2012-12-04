@@ -5,9 +5,9 @@ describe TableGo::Renderers::HtmlRenderer do
 
   let(:articles) do
     [ Article.new(:title => 'iPutz',
-        :date_of_order => Date.new(2012), :id => 1, :vat => 19, :price => 5, :xmas_bonus => true),
+        :date_of_order => Date.new(2012), :ident => 1, :vat => 19, :price => 5, :xmas_bonus => true),
       Article.new(:title => 'Nutzbook',
-        :date_of_order => Date.new(2012), :id => 2, :vat => 19, :price => 5, :xmas_bonus => false) ]
+        :date_of_order => Date.new(2012), :ident => 2, :vat => 19, :price => 5, :xmas_bonus => false) ]
   end
 
   let(:template) do
@@ -25,7 +25,7 @@ describe TableGo::Renderers::HtmlRenderer do
         <table>
           <thead>
             <tr>
-              <th>Id</th>
+              <th>Ident</th>
               <th>Title</th>
               <th>Date of order</th>
               <th>Vat</th>
@@ -65,9 +65,9 @@ describe TableGo::Renderers::HtmlRenderer do
         :title => 'one Table',
         :table_html => { :id => :articles },
         :row_html   => { :class => :row_css_class,
-                         :id    => lambda { |record| "row_#{record.id}" }}) do |t|
+                         :id    => lambda { |record| "row_#{record.ident}" }}) do |t|
 
-        t.column :id,
+        t.column :ident,
                  :column_html => { :class => lambda { |record, column, value| value.even? ? :even : :odd } }
 
         t.column :vat,
@@ -82,7 +82,7 @@ describe TableGo::Renderers::HtmlRenderer do
                  :header_html => { :class => :date, :style => :xyz, :id => :date_column },
                  :column_html => { :class => :date,
                                    :style => :xyz,
-                                   :id => lambda { |record, column, value| "date_#{record.id}" }}
+                                   :id => lambda { |record, column, value| "date_#{record.ident}" }}
 
         t.column :date_of_order,
                  :as => :date,
@@ -115,7 +115,7 @@ describe TableGo::Renderers::HtmlRenderer do
           <caption>one Table</caption>
           <thead>
             <tr>
-              <th>Id</th>
+              <th>Ident</th>
               <th>as percent</th>
               <th>as € currency</th>
               <th class="date" id="date_column" style="xyz">Date of order</th>

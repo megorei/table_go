@@ -1,50 +1,55 @@
 module TableGo
   module Renderers
-    class HtmlRenderer < Minimal::Template
+    class HtmlRenderer
       include RendererBase
 
-      def render_template(options)
-        self.title      = options.delete(:title)
-        self.table_html = options.delete(:table_html)
-        self.row_html   = options.delete(:row_html)
-        _render(options)
+      def render_template
+        Template.new(template)._render(:renderer => self)
       end
 
-      def content
-        table table_html do
-          caption title if title
-          table_head
-          table_body
-          # table_foot
+
+
+      class Template < Minimal::Template
+        def renderer
+          locals[:renderer]
         end
-      end
 
-      def table_head
-        thead do
-          tr do
-            source_table.columns.each do |column|
-              th label_for_column(column), html_options_for_header(column)
-            end
+        def content
+          table renderer.table_html do
+            caption renderer.title if renderer.title
+            table_head
+            table_body
+            # table_foot
           end
         end
-      end
 
-      def table_body
-        tbody do
-          source_table.collection.each do |record|
-            tr html_options_for_row(record) do
-              source_table.columns.each do |column|
-                value = value_from_record_by_column(record, column)
-                td apply_formatter(record, column, value), html_options_for_cell(record, column, value)
+        def table_head
+          thead do
+            tr do
+              renderer.source_table.columns.each do |column|
+                th renderer.label_for_column(column), renderer.html_options_for_header(column)
               end
             end
           end
         end
-      end
 
-      def table_foot
-        tfoot do
-          tr do
+        def table_body
+          tbody do
+            renderer.source_table.collection.each do |record|
+              tr renderer.html_options_for_row(record) do
+                renderer.source_table.columns.each do |column|
+                  value = renderer.value_from_record_by_column(record, column)
+                  td renderer.apply_formatter(record, column, value), renderer.html_options_for_cell(record, column, value)
+                end
+              end
+            end
+          end
+        end
+
+        def table_foot
+          tfoot do
+            tr do
+            end
           end
         end
       end
