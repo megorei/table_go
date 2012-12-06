@@ -5,9 +5,11 @@ describe TableGo::Renderers::HtmlRenderer do
 
   let(:articles) do
     [ Article.new(:title => 'iPutz',
-        :date_of_order => Date.new(2012), :ident => 1, :vat => 19, :price => 5, :xmas_bonus => true),
+        :date_of_order => Date.new(2012), :ident => 1, :vat => 19, :price => 5, :xmas_bonus => true,
+        :my_type => 'super_type'),
       Article.new(:title => 'Nutzbook',
-        :date_of_order => Date.new(2012), :ident => 2, :vat => 19, :price => 5, :xmas_bonus => false) ]
+        :date_of_order => Date.new(2012), :ident => 2, :vat => 19, :price => 5, :xmas_bonus => false,
+        :my_type => 'hardware_type') ]
   end
 
   let(:template) do
@@ -31,6 +33,7 @@ describe TableGo::Renderers::HtmlRenderer do
               <th>Vat</th>
               <th>Price</th>
               <th>Xmas bonus</th>
+              <th>My type</th>
             </tr>
           </thead>
           <tbody>
@@ -41,6 +44,7 @@ describe TableGo::Renderers::HtmlRenderer do
               <td>19</td>
               <td>5</td>
               <td>true</td>
+              <td>super_type</td>
             </tr>
             <tr>
               <td>2</td>
@@ -49,6 +53,7 @@ describe TableGo::Renderers::HtmlRenderer do
               <td>19</td>
               <td>5</td>
               <td>false</td>
+              <td>hardware_type</td>
             </tr>
           </tbody>
         </table>
@@ -103,6 +108,9 @@ describe TableGo::Renderers::HtmlRenderer do
                  :as => :boolean,
                  :label => 'as boolean'
 
+        t.column :my_type,
+                 :send => :titleize
+
         # t.column :trader,
         #          :method => :name
 
@@ -122,6 +130,7 @@ describe TableGo::Renderers::HtmlRenderer do
               <th>Date of order</th>
               <th>with custom formatter</th>
               <th>as boolean</th>
+              <th>My type</th>
             </tr>
           </thead>
           <tbody>
@@ -133,6 +142,7 @@ describe TableGo::Renderers::HtmlRenderer do
               <td>Jan 01</td>
               <td>10-10-2102</td>
               <td>true</td>
+              <td>Super Type</td>
             </tr>
             <tr class="row_css_class" id="row_2">
               <td class="even">2</td>
@@ -142,6 +152,7 @@ describe TableGo::Renderers::HtmlRenderer do
               <td>Jan 01</td>
               <td>10-10-2102</td>
               <td>false</td>
+              <td>Hardware Type</td>
             </tr>
           </tbody>
         </table>

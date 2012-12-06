@@ -67,6 +67,8 @@ module TableGo
       def apply_formatter(record, column, value)
         if formatter = column.as
           Formatter.apply(formatter, record, column, value)
+        elsif formatter = column.send
+          Formatter.apply_send(formatter, record, column, value)
         elsif formatter = column.block
           capture { Formatter.apply(formatter, record, column, value) }
         else

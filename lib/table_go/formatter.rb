@@ -57,6 +57,9 @@ module TableGo
       formatter_proc.call(value, record, column).to_s.html_safe
     end
 
+    def self.apply_send(formatter, record, column, value)
+      value.send(formatter).to_s.html_safe
+    end
 
   end
 end

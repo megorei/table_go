@@ -14,6 +14,10 @@ module TableGo
       options[:as]
     end
 
+    def send
+      options[:send]
+    end
+
     def as_options
       options[:as_options] || {}
     end

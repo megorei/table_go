@@ -5,9 +5,11 @@ describe TableGo::Renderers::CsvRenderer do
 
   let(:articles) do
     [ Article.new(:title => 'iPutz',
-        :date_of_order => Date.new(2012), :ident => 1, :vat => 19, :price => 5, :xmas_bonus => true),
+        :date_of_order => Date.new(2012), :ident => 1, :vat => 19, :price => 5, :xmas_bonus => true,
+        :my_type => 'super_type'),
       Article.new(:title => 'Nutzbook',
-        :date_of_order => Date.new(2012), :ident => 2, :vat => 19, :price => 5, :xmas_bonus => false) ]
+        :date_of_order => Date.new(2012), :ident => 2, :vat => 19, :price => 5, :xmas_bonus => false,
+        :my_type => 'hardware_type') ]
   end
 
 
@@ -16,9 +18,9 @@ describe TableGo::Renderers::CsvRenderer do
 
     it 'should render a simple automatic csv table' do
       subject.cleanup_csv.should == %Q(
-        "Ident";"Title";"Date of order";"Vat";"Price";"Xmas bonus"
-        "1";"iPutz";"2012-01-01";"19";"5";"true"
-        "2";"Nutzbook";"2012-01-01";"19";"5";"false"
+        "Ident";"Title";"Date of order";"Vat";"Price";"Xmas bonus";"My type"
+        "1";"iPutz";"2012-01-01";"19";"5";"true";"super_type"
+        "2";"Nutzbook";"2012-01-01";"19";"5";"false";"hardware_type"
       ).cleanup_csv
     end
 
@@ -70,6 +72,9 @@ describe TableGo::Renderers::CsvRenderer do
                  :as => :boolean,
                  :label => 'as boolean'
 
+        t.column :my_type,
+                 :send => :titleize
+
         # t.column :trader,
         #          :method => :name
 
@@ -78,9 +83,9 @@ describe TableGo::Renderers::CsvRenderer do
 
     it 'should render a html table', 'with custom attributes' do
       subject.cleanup_csv.should == %Q(
-        "Ident";"as percent";"as € currency";"Date of order";"Date of order";"with custom formatter";"as boolean"
-        "1";"19.000%";"$5.00";"2012-01-01";"Jan 01";"10-10-2102";"true"
-        "2";"19.000%";"$5.00";"2012-01-01";"Jan 01";"10-10-2102";"false"
+        "Ident";"as percent";"as € currency";"Date of order";"Date of order";"with custom formatter";"as boolean";"My type"
+        "1";"19.000%";"$5.00";"2012-01-01";"Jan 01";"10-10-2102";"true";"Super Type"
+        "2";"19.000%";"$5.00";"2012-01-01";"Jan 01";"10-10-2102";"false";"Hardware Type"
       ).cleanup_csv
     end
 
