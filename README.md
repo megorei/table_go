@@ -32,6 +32,9 @@ example in HAML
       - t.column :id,
                  :column_html => { :class => lambda { |record, column, value| value.even? ? :even : :odd } }
 
+      - t.column :my_type,
+                 :send => :titleize
+
       - t.column :vat,
                  :label => 'as percent',
                  :as => :percent
