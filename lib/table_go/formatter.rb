@@ -11,22 +11,22 @@ module TableGo
 
     formatters.store(:date,
       lambda do |value, record, column|
-        I18n.l(value, :format => (column.as_options[:format] || :default))
+        value.present? ? I18n.l(value, :format => (column.as_options[:format] || :default)) : value
       end
     )
 
     formatters.store(:datetime,
       lambda do |value, record, column|
-        I18n.l(Time.parse(value.to_s).localtime, :format => (column.as_options[:format] || :default))
+        value.present? ? I18n.l(Time.parse(value.to_s).localtime, :format => (column.as_options[:format] || :default)) : value
       end
     )
 
     formatters.store(:boolean,
       lambda do |value, record, column|
         if value == true
-          'true'
+          '&#10004;'
         elsif value == false
-          'false'
+          '&#10008;'
         end
       end
     )

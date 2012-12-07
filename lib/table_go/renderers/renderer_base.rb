@@ -2,9 +2,11 @@ module TableGo
   module Renderers
     module RendererBase
       extend ActiveSupport::Concern
+      include ActionView::Helpers::CaptureHelper
 
       included do
         attr_accessor :source_table, :title, :table_html, :row_html, :template
+        # attr_accessor :output_buffer
       end
 
       def apply_options(options)
@@ -59,8 +61,12 @@ module TableGo
       # end
 
       def value_from_record_by_column(record, column)
-        value = record.send(column.name)
-        column.method ? value.send(column.method) : value
+        if record.respond_to?(column.name)
+          value = record.send(column.name)
+          column.method ? value.send(column.method) : value
+        else
+          ''
+        end
       end
 
 
@@ -70,7 +76,8 @@ module TableGo
         elsif formatter = column.send
           Formatter.apply_send(formatter, record, column, value)
         elsif formatter = column.block
-          capture { Formatter.apply(formatter, record, column, value) }
+          Formatter.apply(formatter, record, column, value )
+          # capture { Formatter.apply(formatter, record, column, value )}
         else
           value
         end
