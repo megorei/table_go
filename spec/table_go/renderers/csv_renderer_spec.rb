@@ -84,8 +84,8 @@ describe TableGo::Renderers::CsvRenderer do
     it 'should render a html table', 'with custom attributes' do
       subject.cleanup_csv.should == %Q(
         "Ident";"as percent";"as € currency";"Date of order";"Date of order";"with custom formatter";"as boolean";"My type"
-        "1";"19.000%";"$5.00";"2012-01-01";"Jan 01";"10-10-2102";"true";"Super Type"
-        "2";"19.000%";"$5.00";"2012-01-01";"Jan 01";"10-10-2102";"false";"Hardware Type"
+        "1";"19.000%";"$5.00";"2012-01-01";"Jan 01";"10-10-2102";"&#10004;";"Super Type"
+        "2";"19.000%";"$5.00";"2012-01-01";"Jan 01";"10-10-2102";"&#10008;";"Hardware Type"
       ).cleanup_csv
     end
 

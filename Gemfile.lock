@@ -1,9 +1,3 @@
-GIT
-  remote: git://github.com/dinge/minimal.git
-  revision: b9db4f7cfacccc58c1699a6f5c2ff8928678936f
-  specs:
-    minimal (0.0.8)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -103,6 +97,5 @@ PLATFORMS
 
 DEPENDENCIES
   fastercsv
-  minimal!
   rails
   rspec-rails

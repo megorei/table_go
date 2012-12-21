@@ -17,7 +17,6 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'actionpack'
   gem.add_dependency 'fastercsv'
-  # gem.add_dependency 'minimal', :git => 'git://github.com/dinge/minimal.git'
 
   gem.add_development_dependency 'rspec'
 end

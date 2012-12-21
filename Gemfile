@@ -1,13 +1,12 @@
 source 'http://rubygems.org'
 gem 'rails'
-# gem 'minimal'
-gem 'minimal',      :git => 'git://github.com/dinge/minimal.git'
 gem 'fastercsv'
 
 group :development, :test do
   # gem 'sqlite3-ruby'
   gem 'rspec-rails'
-  # gem 'ruby-debug'
+  #gem 'pry-rails'
+  #gem 'ruby-debug'
 end
 
 group :test do

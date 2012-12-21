@@ -141,7 +141,7 @@ describe TableGo::Renderers::HtmlRenderer do
               <td class="date" id="date_1" style="xyz">2012-01-01</td>
               <td>Jan 01</td>
               <td>10-10-2102</td>
-              <td>true</td>
+              <td>&#10004;</td>
               <td>Super Type</td>
             </tr>
             <tr class="row_css_class" id="row_2">
@@ -151,7 +151,7 @@ describe TableGo::Renderers::HtmlRenderer do
               <td class="date" id="date_2" style="xyz">2012-01-01</td>
               <td>Jan 01</td>
               <td>10-10-2102</td>
-              <td>false</td>
+              <td>&#10008;</td>
               <td>Hardware Type</td>
             </tr>
           </tbody>

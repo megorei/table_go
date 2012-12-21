@@ -6,7 +6,7 @@ require 'action_controller'
 # require 'active_model'
 require 'ostruct'
 require 'table_go'
-require 'minimal'
+# require 'pry'
 
 RSpec.configure do |config|
   # some (optional) config here

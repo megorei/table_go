@@ -4,56 +4,45 @@ module TableGo
       include RendererBase
 
       def render_template
-        Template.new(template)._render(:renderer => self)
+        template.content_tag :table, table_html do
+          template.concat template.content_tag(:caption, title) if title
+          template.concat table_head
+          template.concat table_body
+        end
       end
 
-
-
-      class Template < Minimal::Template
-        def renderer
-          locals[:renderer]
-        end
-
-        def content
-          table renderer.table_html do
-            caption renderer.title if renderer.title
-            table_head
-            table_body
-            # table_foot
+      def table_head
+        template.content_tag :thead do
+          template.content_tag(:tr) do
+            source_table.columns.each do |column|
+              template.concat template.content_tag(:th, label_for_column(column), html_options_for_header(column))
+            end
           end
         end
 
-        def table_head
-          thead do
-            tr do
-              renderer.source_table.columns.each do |column|
-                th renderer.label_for_column(column), renderer.html_options_for_header(column)
+      end
+
+      def table_body
+        template.content_tag :tbody do
+
+          source_table.collection.each do |record|
+             tr = template.content_tag(:tr, html_options_for_row(record)) do
+              source_table.columns.each do |column|
+                value = value_from_record_by_column(record, column)
+                template.concat template.content_tag(:td, apply_formatter(record, column, value), html_options_for_cell(record, column, value))
               end
-            end
-          end
-        end
-
-        def table_body
-          tbody do
-            renderer.source_table.collection.each do |record|
-              tr renderer.html_options_for_row(record) do
-                renderer.source_table.columns.each do |column|
-                  value = renderer.value_from_record_by_column(record, column)
-                  td renderer.apply_formatter(record, column, value), renderer.html_options_for_cell(record, column, value)
-                end
-              end
-            end
-          end
-        end
-
-        def table_foot
-          tfoot do
-            tr do
-            end
+             end
+             template.concat tr
           end
         end
       end
 
+      def table_foot
+        template.content_tag :tfoot do
+          template.content_tag :tr do
+          end
+        end
+      end
     end
   end
 end
