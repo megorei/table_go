@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/table_go/version', __FILE__)
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'table_go/version'
 
 Gem::Specification.new do |gem|
   gem.authors       = ['Lars Gollnow', 'Vladimir Glusic']
