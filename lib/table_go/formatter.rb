@@ -43,6 +43,12 @@ module TableGo
       end
     )
 
+    formatters.store(:delimiter,
+      lambda do |value, record, column|
+        number_with_delimiter(value, column.as_options)
+      end
+    )
+
 
 
 
