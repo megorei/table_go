@@ -22,12 +22,10 @@ Or install it yourself as:
 
 example in HAML
 
- table_go_for @orders, Order,
-    :title => 'one Table',
-    :table_html => { :id => :the_table },
-    :row_html   => { :class => lambda { cycle('even', 'odd') },
-                     :id =>    lambda { |record| dom_id(record, :special) }} do |t|
-
+    = table_go_for @orders, Order, :title => 'one Table',
+        :table_html => { :id => :the_table },
+        :row_html   => { :class => lambda { cycle('even', 'odd') },
+                         :id => lambda { |record| dom_id(record, :special) }} do |t|
 
       - t.column :id,
                  :column_html => { :class => lambda { |record, column, value| value.even? ? :even : :odd } }
@@ -46,8 +44,8 @@ example in HAML
       - t.column :date_of_order,
                  :header_html => { :class => :date, :style => :xyz, :id => :date_column },
                  :column_html => { :class => :date,
-                                 :style => :xyz,
-                                 :id => lambda { |record, column, value| "date_#{record.id}" }}
+                                   :style => :xyz,
+                                   :id => lambda { |record, column, value| "date_#{record.id}" }}
 
       - t.column :date_of_order,
                  :as => :date,
@@ -59,10 +57,10 @@ example in HAML
 
       - t.column :date_of_order,
                  :label => 'with block level custom formatter' do |value, record, column|
-        %b do it
-        %br
-        = value
-        %b like u want
+            %b do it
+            %br
+            = value
+            %b like u want
 
 
       - t.column :xmas_bonus,
@@ -73,6 +71,9 @@ example in HAML
                  :method => :name
 
 
+## TODO:
+
+- add sorting for column
 
 
 
