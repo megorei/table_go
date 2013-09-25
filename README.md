@@ -22,12 +22,11 @@ Or install it yourself as:
 
 example in HAML
 
- table_go_for @orders, Order,
+  table_go_for @orders, Order,
     :title => 'one Table',
     :table_html => { :id => :the_table },
     :row_html   => { :class => lambda { cycle('even', 'odd') },
                      :id =>    lambda { |record| dom_id(record, :special) }} do |t|
-
 
       - t.column :id,
                  :column_html => { :class => lambda { |record, column, value| value.even? ? :even : :odd } }
