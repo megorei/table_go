@@ -71,6 +71,9 @@ example in HAML
                  :method => :name
 
 
+## TODO:
+
+- add sorting for column
 
 
 
