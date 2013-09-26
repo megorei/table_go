@@ -69,7 +69,3 @@ module TableGo
 
   end
 end
-
-
-    #   when Time
-    #     I18n.l(value.localtime, :format => :compact)

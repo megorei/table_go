@@ -27,6 +27,11 @@ module TableGo
     renderer.render_template
   end
 
+  def self.formatters
+    Formatter.formatters
+  end
+
 end
+
 
 require 'table_go/railtie' if defined?(Rails)

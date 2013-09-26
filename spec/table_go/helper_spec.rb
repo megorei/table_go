@@ -1,8 +1,9 @@
 # encoding: UTF-8
 require 'spec_helper'
 
+ActionView::Base.send :include, TableGo::Helpers
 
-describe TableGo::Renderers::HtmlRenderer do
+describe TableGo::Helpers do
 
   let(:articles) do
     [ Article.new(:title => 'iPutz',
@@ -19,50 +20,6 @@ describe TableGo::Renderers::HtmlRenderer do
     end
   end
 
-  describe 'automatic mode' do
-
-    subject { TableGo.render_html(articles, Article, template, {}) }
-
-    it 'should render a simple automatic html table' do
-      subject.cleanup_html.should == %Q(
-        <table>
-          <thead>
-            <tr>
-              <th>Ident</th>
-              <th>Title</th>
-              <th>Date of order</th>
-              <th>Vat</th>
-              <th>Price</th>
-              <th>Xmas bonus</th>
-              <th>My type</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>iPutz</td>
-              <td>2012-01-01</td>
-              <td>19</td>
-              <td>5</td>
-              <td>true</td>
-              <td>super_type</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Nutzbook</td>
-              <td>2012-01-01</td>
-              <td>19</td>
-              <td>5</td>
-              <td>false</td>
-              <td>hardware_type</td>
-            </tr>
-          </tbody>
-        </table>
-      ).cleanup_html
-    end
-
-
-  end
 
 
   describe 'custom mode' do
@@ -166,6 +123,43 @@ describe TableGo::Renderers::HtmlRenderer do
 
   end
 
+  describe 'integtation in haml template' do
+
+    let(:subject) do
+      Haml::Engine.new(read_file_from_fixtures_path('simple_table.html.haml'))
+    end
+
+
+   it "description" do
+      subject.render(template, :articles => articles).cleanup_html.should == %Q(
+        <table>
+          <thead>
+            <tr>
+              <th>Ident</th>
+              <th>Custom single cell</th>
+              <th>Custom multiline cell</th>
+              <th>Custom single cell with backwards compatibility</th>
+            </tr></thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Ident: 1 - Title: iPutz</td>
+              <td>Ident: 1 - Title: iPutz</td>
+              <td>Ident: 1</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Ident: 2 - Title: Nutzbook</td>
+              <td>Ident: 2 - Title: Nutzbook</td>
+              <td>Ident: 2</td>
+            </tr>
+          </tbody>
+        </table>
+      ).cleanup_html
+    end
+
+
+  end
 
 end
 
