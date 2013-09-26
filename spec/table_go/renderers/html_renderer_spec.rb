@@ -13,11 +13,7 @@ describe TableGo::Renderers::HtmlRenderer do
         :my_type => 'hardware_type') ]
   end
 
-  let(:template) do
-    ActionView::Base.new.tap do |view|
-      view.output_buffer = ActiveSupport::SafeBuffer.new rescue ''
-    end
-  end
+  let(:template) { action_view_instance }
 
   describe 'automatic mode' do
 
@@ -60,7 +56,6 @@ describe TableGo::Renderers::HtmlRenderer do
         </table>
       ).cleanup_html
     end
-
 
   end
 

@@ -14,22 +14,18 @@ describe TableGo::Helpers do
         :my_type => 'hardware_type') ]
   end
 
-  let(:template) do
-    ActionView::Base.new.tap do |view|
-      view.output_buffer = ActiveSupport::SafeBuffer.new rescue ''
-    end
-  end
+  let(:template) { action_view_instance }
 
 
-  describe 'integtation in haml template' do
+  describe 'integration in haml template' do
 
     let(:subject) do
-      Haml::Engine.new(read_file_from_fixtures_path('simple_table.html.haml'))
+      Haml::Engine.new(read_file_from_fixtures_path('simple_table.html.haml')).render(template, :articles => articles)
     end
 
 
-   it "description" do
-      subject.render(template, :articles => articles).cleanup_html.should == %Q(
+    it "it should render in haml" do
+      subject.cleanup_html.should == %Q(
         <table>
           <thead>
             <tr>
