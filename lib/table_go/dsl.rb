@@ -1,5 +1,5 @@
 module TableGo
-  class Columns
+  class Dsl
     include Enumerable
     attr_accessor :table
 
@@ -13,6 +13,10 @@ module TableGo
 
     def each(&block)
       @columns.each(&block)
+    end
+
+    def title(title)
+
     end
 
   end

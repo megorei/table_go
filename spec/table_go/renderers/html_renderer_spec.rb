@@ -20,7 +20,7 @@ describe TableGo::Renderers::HtmlRenderer do
     subject { TableGo.render_html(articles, Article, template, {}) }
 
     it 'should render a simple automatic html table' do
-      subject.cleanup_html.should == %Q(
+      subject.cleanup_html.should eql %Q(
         <table>
           <thead>
             <tr>
@@ -114,7 +114,7 @@ describe TableGo::Renderers::HtmlRenderer do
     end
 
     it 'should render a html table', 'with custom attributes' do
-      subject.cleanup_html.should == %Q(
+      subject.cleanup_html.should eql %Q(
         <table id="articles">
           <caption>one Table</caption>
           <thead>
@@ -157,10 +157,40 @@ describe TableGo::Renderers::HtmlRenderer do
         </table>
       ).cleanup_html
     end
-
-
   end
 
+  describe "block style setup" do
+
+    subject(:table) do
+      TableGo.render_html(articles, Article, template,
+        :title => 'one Table',
+        :table_html => { :id => :articles },
+        :row_html   => { :class => :row_css_class,
+                         :id    => lambda { |record| "row_#{record.ident}" }}) do |t|
+
+        t.title 'one Table'
+
+        t.column :ident,
+                 :column_html => { :class => lambda { |record, column, value| value.even? ? :even : :odd } }
+      end
+    end
+
+
+    it "should description" do
+      subject.cleanup_html.should start_with %Q(
+        <table id="articles">
+          <caption>one Table</caption>
+          <thead>
+            <tr>
+              <th>Ident</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="row_css_class" id="row_1">
+      ).cleanup_html
+    end
+
+  end
 
 end
 

@@ -23,7 +23,6 @@ describe TableGo::Helpers do
       Haml::Engine.new(read_file_from_fixtures_path('simple_table.html.haml')).render(template, :articles => articles)
     end
 
-
     it "it should render in haml" do
       subject.cleanup_html.should == %Q(
         <table>
