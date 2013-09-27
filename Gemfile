@@ -1,17 +1,11 @@
 source 'http://rubygems.org'
-gem 'rails'
+gem 'actionpack'
 gem 'fastercsv'
 
 group :development, :test do
-  # gem 'sqlite3-ruby'
-  gem 'rspec-rails'
-  #gem 'pry-rails'
-  #gem 'ruby-debug'
+  gem 'rspec'
+  gem 'haml'
+  gem 'haml-rails'
+  # gem 'pry-rails'
+  gem 'ruby-debug'
 end
-
-group :test do
-end
-
-
-# Specify your gem's dependencies in table_go.gemspec
-# gemspec

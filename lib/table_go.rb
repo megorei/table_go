@@ -11,11 +11,11 @@ module TableGo
 
 
   def self.render_html(collection, model_klass, template, options = {}, &block)
-    render(collection, model_klass, TableGo::Renderers::HtmlRenderer, template, options, &block)
+    render(collection, model_klass, Renderers::HtmlRenderer, template, options, &block)
   end
 
   def self.render_csv(collection, model_klass, options = {}, &block)
-    render(collection, model_klass, TableGo::Renderers::CsvRenderer, nil, options, &block)
+    render(collection, model_klass, Renderers::CsvRenderer, nil, options, &block)
   end
 
   def self.render(collection, model_klass, renderer_klass, template, options = {}, &block)
@@ -27,6 +27,11 @@ module TableGo
     renderer.render_template
   end
 
+  def self.formatters
+    Formatter.formatters
+  end
+
 end
+
 
 require 'table_go/railtie' if defined?(Rails)

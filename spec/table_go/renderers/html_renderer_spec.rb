@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require 'spec_helper'
 
+
 describe TableGo::Renderers::HtmlRenderer do
 
   let(:articles) do
@@ -12,11 +13,7 @@ describe TableGo::Renderers::HtmlRenderer do
         :my_type => 'hardware_type') ]
   end
 
-  let(:template) do
-    ActionView::Base.new.tap do |view|
-      view.output_buffer = ActiveSupport::SafeBuffer.new rescue ''
-    end
-  end
+  let(:template) { action_view_instance }
 
   describe 'automatic mode' do
 
@@ -60,7 +57,6 @@ describe TableGo::Renderers::HtmlRenderer do
       ).cleanup_html
     end
 
-
   end
 
 
@@ -97,12 +93,12 @@ describe TableGo::Renderers::HtmlRenderer do
                  :label  => 'with custom formatter',
                  :as => lambda { |value, record, column| value.to_s.reverse }
 
-        # t.column :date_of_order,
-        #          :label => 'with block level custom formatter' do |value, record, column|
+        t.column :info_text,
+                 :label => 'with block level custom formatter' do |value, record, column|
 
-        #   "a special<br/>value"
+          "a special<br/>value"
 
-        # end
+        end
 
         t.column :xmas_bonus,
                  :as => :boolean,
@@ -129,6 +125,7 @@ describe TableGo::Renderers::HtmlRenderer do
               <th class="date" id="date_column" style="xyz">Date of order</th>
               <th>Date of order</th>
               <th>with custom formatter</th>
+              <th>with block level custom formatter</th>
               <th>as boolean</th>
               <th>My type</th>
             </tr>
@@ -141,6 +138,7 @@ describe TableGo::Renderers::HtmlRenderer do
               <td class="date" id="date_1" style="xyz">2012-01-01</td>
               <td>Jan 01</td>
               <td>10-10-2102</td>
+              <td>a special<br/>value</td>
               <td>&#10004;</td>
               <td>Super Type</td>
             </tr>
@@ -151,6 +149,7 @@ describe TableGo::Renderers::HtmlRenderer do
               <td class="date" id="date_2" style="xyz">2012-01-01</td>
               <td>Jan 01</td>
               <td>10-10-2102</td>
+              <td>a special<br/>value</td>
               <td>&#10008;</td>
               <td>Hardware Type</td>
             </tr>
@@ -161,6 +160,7 @@ describe TableGo::Renderers::HtmlRenderer do
 
 
   end
+
 
 end
 
