@@ -4,7 +4,7 @@ module TableGo
       extend ActiveSupport::Concern
 
       included do
-        attr_accessor :source_table, :title, :table_html, :row_html, :template
+        attr_accessor :table, :title, :table_html, :row_html, :template
         delegate :content_tag, :concat, :to => :template
       end
 
@@ -25,9 +25,9 @@ module TableGo
 
         def label_for_column(column)
           column.label || begin
-            if column.method && 1==3# reflection = source_table.model_klass.reflections[column.name]
+            if column.method && 1==3# reflection = table.model_klass.reflections[column.name]
               reflection.klass.human_attribute_name(column.method).html_safe
-            # if column.method && reflection = source_table.model_klass.reflections[column.name]
+            # if column.method && reflection = table.model_klass.reflections[column.name]
             #   reflection.klass.human_attribute_name(column.method).html_safe
             else
               column.human_attribute_name

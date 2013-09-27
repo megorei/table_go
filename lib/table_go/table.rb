@@ -7,9 +7,7 @@ module TableGo
     def initialize(collection, model_klass, &block)
       @collection  = collection
       @model_klass = model_klass
-      # @dsl         = Dsl.new(self)
       @columns     = []
-
       evaluate_dsl(block)
     end
 
@@ -30,6 +28,7 @@ module TableGo
     def attribute_names_from_model_klass
       model_klass.respond_to?(:column_names) ? model_klass.column_names : []
     end
+
 
 
     def column(name, options = {}, &block)

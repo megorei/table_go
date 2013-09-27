@@ -2,7 +2,6 @@ require 'table_go/version'
 
 module TableGo
   autoload :Table, 'table_go/table'
-  autoload :Dsl, 'table_go/dsl'
   autoload :Column, 'table_go/column'
   autoload :TableRenderer, 'table_go/table_renderer'
   autoload :Renderers, 'table_go/renderers'
