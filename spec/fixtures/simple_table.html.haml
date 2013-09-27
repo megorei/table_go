@@ -1,3 +1,4 @@
+%p Suppe
 = table_go_for(articles, Article) do |t|
   - t.column :ident
   - t.column :custom_single_cell do |value, record, column|
@@ -7,3 +8,4 @@
     = " Title: %s" % record.title
   - t.column :custom_single_cell_with_backwards_compatibility do |value, record, column|
     - "Ident: %s" % record.ident
+%p Pampe

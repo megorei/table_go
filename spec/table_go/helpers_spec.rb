@@ -24,7 +24,8 @@ describe TableGo::Helpers do
     end
 
     it "it should render in haml" do
-      subject.cleanup_html.should == %Q(
+      subject.cleanup_html.should eql %Q(
+        <p>Suppe</p>
         <table>
           <thead>
             <tr>
@@ -48,9 +49,25 @@ describe TableGo::Helpers do
             </tr>
           </tbody>
         </table>
+        <p>Pampe</p>
       ).cleanup_html
     end
 
+
+  end
+
+  context 'speedtest' do
+
+    let(:more_articles) { 1000.times.map { articles }.flatten }
+
+
+    it 'should run fast' do
+      puts Benchmark.measure {
+        2.times do
+          Haml::Engine.new(read_file_from_fixtures_path('simple_table.html.haml')).render(template, :articles => more_articles)
+        end
+      }
+    end
 
   end
 

@@ -12,8 +12,6 @@ module TableGo
         raise ArgumentError.new('implement #render_template in concrete renderer')
       end
 
-
-
       private
 
         def label_for_column(column)
@@ -77,24 +75,113 @@ module TableGo
 
 
         def apply_formatter_for_block(formatter, record, column, value)
+          # template.capture { Formatter.apply(formatter, record, column, value )}
+          # template.capture_haml { Formatter.apply(formatter, record, column, value )}
+          # template.send(:capture_haml) { Formatter.apply(formatter, record, column, value )}
           string = nil
           capture_view do
             string = Formatter.apply(formatter, record, column, value )
           end.presence || string # for compatibility to legacy haml "- t.column :ident"
         end
 
-        def capture_view(&proc)
-          @capturer ||= template.is_haml? ? capture_haml : capture_action_view
-          @capturer.call(proc)
+
+        def capture_view
+          template.is_haml? ? capture_haml { yield } : template.capture { yield }
         end
 
-        def capture_haml(&proc)
-          lambda { |c| template.capture_haml { c.call } }
+        delegate :with_haml_buffer, :haml_buffer, :to => :template
+
+        # stripped down ripoff from Haml's capture_haml, needed for speed
+        def capture_haml(*args, &block)
+          # buffer = eval('if defined? _hamlout then _hamlout else nil end', block.binding) || haml_buffer
+          # buffer = haml_buffer
+          # with_haml_buffer(buffer) do
+            position = haml_buffer.buffer.length
+
+            haml_buffer.capture_position = position
+            block.call(*args)
+
+            # captured = haml_buffer.buffer.slice!(0..-1)
+            captured = haml_buffer.buffer.slice!(position..-1)
+            # return captured if haml_buffer.options[:ugly]
+
+            # debugger
+            # Note that the "reject" is needed for rbx 1.2.4, which includes empty
+            # strings in the returned array when splitting by /^/.
+            # captured = captured.split(/^/).reject {|x| x == ""}
+
+            # min_tabs = nil
+            # captured.each do |line|
+            #   tabs = line.index(/[^ ]/) || line.length
+            #   min_tabs ||= tabs
+            #   min_tabs = min_tabs > tabs ? tabs : min_tabs
+            # end
+
+            # captured.map do |line|
+            #   line.slice(min_tabs, line.length)
+            # end.join
+          # end
+        ensure
+          haml_buffer.capture_position = nil
         end
 
-        def capture_action_view
-          lambda { |c| template.capture { c.call } }
-        end
+
+        # def capture_haml(*args, &block)
+        #   # buffer = eval('if defined? _hamlout then _hamlout else nil end', block.binding) || haml_buffer
+        #   # buffer = haml_buffer
+        #   # with_haml_buffer(buffer) do
+        #     position = haml_buffer.buffer.length
+
+        #     haml_buffer.capture_position = position
+        #     block.call(*args)
+
+        #     captured = haml_buffer.buffer.slice!(position..-1)
+        #     # return captured if haml_buffer.options[:ugly]
+
+        #     # debugger
+        #     # Note that the "reject" is needed for rbx 1.2.4, which includes empty
+        #     # strings in the returned array when splitting by /^/.
+        #     captured = captured.split(/^/).reject {|x| x == ""}
+
+        #     # min_tabs = nil
+        #     # captured.each do |line|
+        #     #   tabs = line.index(/[^ ]/) || line.length
+        #     #   min_tabs ||= tabs
+        #     #   min_tabs = min_tabs > tabs ? tabs : min_tabs
+        #     # end
+
+        #     # captured.map do |line|
+        #     #   line.slice(min_tabs, line.length)
+        #     # end.join
+        #   # end
+        # ensure
+        #   haml_buffer.capture_position = nil
+        # end
+
+        # def capture_view
+        #   template.is_haml? ? template.capture_haml { yield } : template.capture { yield }
+        # end
+
+        # def capture_view
+        #   template.send(capture_method) { yield }
+        # end
+
+        # def capture_method
+        #   @capture_method ||= template.is_haml? ? :capture_haml : :capture
+        # end
+
+        # def capture_view(&proc)
+        #   @capturer ||= template.is_haml? ? capture_haml : capture_action_view
+        #   @capturer.call(proc)
+        # end
+
+        # def capture_haml(&proc)
+        #   lambda { |c| template.capture_haml { c.call } }
+        # end
+
+        # def capture_action_view
+        #   lambda { |c| template.capture { c.call } }
+        # end
 
     end
   end
