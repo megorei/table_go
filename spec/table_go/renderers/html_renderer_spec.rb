@@ -159,16 +159,25 @@ describe TableGo::Renderers::HtmlRenderer do
     end
   end
 
-  describe "block style setup" do
 
-    subject(:table) do
+  describe "block style options" do
+    let(:table_with_hash_options) do
       TableGo.render_html(articles, Article, template,
         :title => 'one Table',
         :table_html => { :id => :articles },
         :row_html   => { :class => :row_css_class,
                          :id    => lambda { |record| "row_#{record.ident}" }}) do |t|
+        t.column :ident,
+                 :column_html => { :class => lambda { |record, column, value| value.even? ? :even : :odd } }
+      end
+    end
 
-        t.title 'one Table'
+    subject(:table_with_block_options) do
+      TableGo.render_html(articles, Article, template) do |t|
+        t.title      'one Table'
+        t.table_html :id => :articles
+        t.row_html   :class => :row_css_class,
+                     :id    => lambda { |record| "row_#{record.ident}" }
 
         t.column :ident,
                  :column_html => { :class => lambda { |record, column, value| value.even? ? :even : :odd } }
@@ -176,18 +185,8 @@ describe TableGo::Renderers::HtmlRenderer do
     end
 
 
-    it "should description" do
-      subject.cleanup_html.should start_with %Q(
-        <table id="articles">
-          <caption>one Table</caption>
-          <thead>
-            <tr>
-              <th>Ident</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="row_css_class" id="row_1">
-      ).cleanup_html
+    it "should render the same way as with hash style options" do
+      subject.should eql table_with_hash_options
     end
 
   end

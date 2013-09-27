@@ -4,8 +4,8 @@ module TableGo
       include RendererBase
 
       def render_template
-        content_tag(:table, table_html) do
-          concat(content_tag(:caption, title)) if title
+        content_tag(:table, table.table_html) do
+          concat(content_tag(:caption, table.title)) if table.title
           concat(table_head)
           concat(table_body)
         end

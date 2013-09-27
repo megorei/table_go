@@ -1,7 +1,7 @@
 module TableGo
   class TableRenderer
     attr_accessor :renderer_klass, :template
-    delegate      :apply_options, :render_template, :to => :renderer
+    delegate      :render_template, :to => :renderer
 
     def initialize(table)
       @table = table

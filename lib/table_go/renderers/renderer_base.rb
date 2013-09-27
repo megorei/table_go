@@ -4,15 +4,8 @@ module TableGo
       extend ActiveSupport::Concern
 
       included do
-        attr_accessor :table, :title, :table_html, :row_html, :template
+        attr_accessor :table, :template
         delegate :content_tag, :concat, :to => :template
-      end
-
-
-      def apply_options(options)
-        self.title      = options.delete(:title)
-        self.table_html = options.delete(:table_html)
-        self.row_html   = options.delete(:row_html)
       end
 
       def render_template
@@ -45,7 +38,7 @@ module TableGo
 
         def html_options_for_row(record)
           {}.tap do |h|
-            (row_html || {}).each do |k, v|
+            (table.row_html || {}).each do |k, v|
               h[k] = v.is_a?(Proc) ? v.call(record) : v
             end
           end
@@ -84,10 +77,10 @@ module TableGo
 
 
         def apply_formatter_for_block(formatter, record, column, value)
-          s = nil
+          string = nil
           capture_view do
-            s = Formatter.apply(formatter, record, column, value )
-          end.presence || s # for compatibility to legacy haml "- t.column :ident"
+            string = Formatter.apply(formatter, record, column, value )
+          end.presence || string # for compatibility to legacy haml "- t.column :ident"
         end
 
         def capture_view(&proc)
