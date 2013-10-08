@@ -96,7 +96,7 @@ describe TableGo::Renderers::HtmlRenderer do
         t.column :info_text,
                  :label => 'with block level custom formatter' do |value, record, column|
 
-          "a special<br/>value"
+            "a special<br/>value"
 
         end
 

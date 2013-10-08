@@ -60,16 +60,18 @@ module TableGo
         end
 
         def apply_formatter(record, column, value)
-          case
-            when formatter = column.as
-              Formatter.apply(formatter, record, column, value)
-            when formatter = column.send
-              Formatter.apply_send(formatter, record, column, value)
-            when formatter = column.block
-              apply_formatter_for_block(formatter, record, column, value)
-            else
-              value
-          end
+          begin
+            case
+              when formatter = column.as
+                Formatter.apply(formatter, record, column, value)
+              when formatter = column.send
+                Formatter.apply_send(formatter, record, column, value)
+              when formatter = column.block
+                apply_formatter_for_block(formatter, record, column, value)
+              else
+                value
+            end
+          end.to_s.html_safe
         end
 
 

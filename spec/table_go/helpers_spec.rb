@@ -33,6 +33,7 @@ describe TableGo::Helpers do
               <th>Custom single cell</th>
               <th>Custom multiline cell</th>
               <th>Custom single cell with backwards compatibility</th>
+              <th>field with_html_markup</th>
             </tr></thead>
           <tbody>
             <tr>
@@ -40,12 +41,14 @@ describe TableGo::Helpers do
               <td>Ident: 1 - Title: iPutz</td>
               <td>Ident: 1 - Title: iPutz</td>
               <td>Ident: 1</td>
+              <td><a href="http://nowhere.com">click me</a><br /><a href="http://otherwhere.com">and here</a></td>
             </tr>
             <tr>
               <td>2</td>
               <td>Ident: 2 - Title: Nutzbook</td>
               <td>Ident: 2 - Title: Nutzbook</td>
               <td>Ident: 2</td>
+              <td><a href="http://nowhere.com">click me</a><br /><a href="http://otherwhere.com">and here</a></td>
             </tr>
           </tbody>
         </table>
@@ -56,20 +59,20 @@ describe TableGo::Helpers do
 
   end
 
-  context 'speedtest' do
+  # context 'speedtest' do
 
-    let(:more_articles) { 1000.times.map { articles }.flatten }
+  #   let(:more_articles) { 1000.times.map { articles }.flatten }
 
 
-    it 'should run fast' do
-      puts Benchmark.measure {
-        2.times do
-          Haml::Engine.new(read_file_from_fixtures_path('simple_table.html.haml')).render(template, :articles => more_articles)
-        end
-      }
-    end
+  #   it 'should run fast' do
+  #     puts Benchmark.measure {
+  #       2.times do
+  #         Haml::Engine.new(read_file_from_fixtures_path('simple_table.html.haml')).render(template, :articles => more_articles)
+  #       end
+  #     }
+  #   end
 
-  end
+  # end
 
 end
 
