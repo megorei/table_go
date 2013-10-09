@@ -78,6 +78,8 @@ example in HAML
 
 ## Changelog
 
+#### 0.2.3
+
 - speed optimisation for haml templates
 - allowing block style table options
 
