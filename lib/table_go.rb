@@ -2,7 +2,6 @@ require 'table_go/version'
 
 module TableGo
   autoload :Table, 'table_go/table'
-  autoload :Columns, 'table_go/columns'
   autoload :Column, 'table_go/column'
   autoload :TableRenderer, 'table_go/table_renderer'
   autoload :Renderers, 'table_go/renderers'
@@ -19,11 +18,10 @@ module TableGo
   end
 
   def self.render(collection, model_klass, renderer_klass, template, options = {}, &block)
-    table     = Table.new(collection, model_klass, &block)
+    table     = Table.new(collection, model_klass, options, &block)
     renderer  = TableRenderer.new(table)
     renderer.renderer_klass = renderer_klass
     renderer.template       = template
-    renderer.apply_options(options)
     renderer.render_template
   end
 
