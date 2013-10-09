@@ -76,6 +76,28 @@ example in HAML
 - add sorting for column
 
 
+## Changelog
+
+- speed optimisation for haml templates
+- allowing block style table options
+
+#### 0.2.2
+
+- small fixes
+- tests
+
+#### 0.2.1
+
+- tests
+
+#### 0.2.0
+
+- allow multiline block level customization of columns
+
+#### 0.1.9
+
+- simple, flexible and fast html table generator
+
 
 ## Contributing
 
