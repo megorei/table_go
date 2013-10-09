@@ -64,7 +64,7 @@ module TableGo
     end
 
     def self.apply_send(formatter, record, column, value)
-      value.send(formatter).to_s.html_safe
+      value.send(formatter)
     end
 
   end

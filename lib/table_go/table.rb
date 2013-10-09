@@ -1,21 +1,24 @@
 module TableGo
   class Table
 
-    attr_accessor :collection, :model_klass, :columns
+    attr_accessor :collection, :model_klass
+    attr_accessor :columns
 
-    def initialize(collection, model_klass, &block)
+    def initialize(collection, model_klass, options, &block)
       @collection  = collection
       @model_klass = model_klass
-      @columns     = Columns.new(self)
-      evaluate_dsl(block)
+      @columns     = []
+      apply_options!(options)
+      evaluate_dsl!(block)
     end
 
-    def evaluate_dsl(block)
+    def evaluate_dsl!(block)
       if block
-        block.call(@columns)
+        # instance_eval(&block)
+        block.call(self)
       else
         attribute_names_from_model_klass.each do |column_name|
-          @columns.column(column_name)
+          column(column_name)
         end
       end
     end
@@ -24,8 +27,34 @@ module TableGo
     #   @model_klass_reflection_keys ||= model_klass.reflections.keys
     # end
 
+
     def attribute_names_from_model_klass
       model_klass.respond_to?(:column_names) ? model_klass.column_names : []
+    end
+
+    def apply_options!(options)
+      options.each { |k, v| send(k, v) }
+    end
+
+
+
+    def column(name, options = {}, &block)
+      @columns << Column.new(self, name, options, &block)
+    end
+
+    def title(title = nil)
+      @title = title if title
+      @title
+    end
+
+    def table_html(table_html = nil)
+      @table_html = table_html if table_html
+      @table_html
+    end
+
+    def row_html(row_html = nil)
+      @row_html = row_html if row_html
+      @row_html
     end
 
   end

@@ -20,7 +20,7 @@ describe TableGo::Renderers::HtmlRenderer do
     subject { TableGo.render_html(articles, Article, template, {}) }
 
     it 'should render a simple automatic html table' do
-      subject.cleanup_html.should == %Q(
+      subject.cleanup_html.should eql %Q(
         <table>
           <thead>
             <tr>
@@ -96,7 +96,7 @@ describe TableGo::Renderers::HtmlRenderer do
         t.column :info_text,
                  :label => 'with block level custom formatter' do |value, record, column|
 
-          "a special<br/>value"
+            "a special<br/>value"
 
         end
 
@@ -114,7 +114,7 @@ describe TableGo::Renderers::HtmlRenderer do
     end
 
     it 'should render a html table', 'with custom attributes' do
-      subject.cleanup_html.should == %Q(
+      subject.cleanup_html.should eql %Q(
         <table id="articles">
           <caption>one Table</caption>
           <thead>
@@ -157,10 +157,39 @@ describe TableGo::Renderers::HtmlRenderer do
         </table>
       ).cleanup_html
     end
-
-
   end
 
+
+  describe "block style options" do
+    let(:table_with_hash_options) do
+      TableGo.render_html(articles, Article, template,
+        :title => 'one Table',
+        :table_html => { :id => :articles },
+        :row_html   => { :class => :row_css_class,
+                         :id    => lambda { |record| "row_#{record.ident}" }}) do |t|
+        t.column :ident,
+                 :column_html => { :class => lambda { |record, column, value| value.even? ? :even : :odd } }
+      end
+    end
+
+    subject(:table_with_block_options) do
+      TableGo.render_html(articles, Article, template) do |t|
+        t.title      'one Table'
+        t.table_html :id => :articles
+        t.row_html   :class => :row_css_class,
+                     :id    => lambda { |record| "row_#{record.ident}" }
+
+        t.column :ident,
+                 :column_html => { :class => lambda { |record, column, value| value.even? ? :even : :odd } }
+      end
+    end
+
+
+    it "should render the same way as with hash style options" do
+      subject.should eql table_with_hash_options
+    end
+
+  end
 
 end
 
