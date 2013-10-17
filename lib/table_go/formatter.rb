@@ -17,7 +17,13 @@ module TableGo
 
     formatters.store(:datetime,
       lambda do |value, record, column|
-        value.present? ? I18n.l(Time.parse(value.to_s).localtime, :format => (column.as_options[:format] || :default)) : value
+        value.present? ? I18n.l(DateTime.parse(value), :format => (column.as_options[:format] || :default)) : value
+      end
+    )
+
+    formatters.store(:time,
+      lambda do |value, record, column|
+        value.present? ? I18n.l(Time.parse(value), :format => (column.as_options[:format] || :default)) : value
       end
     )
 
