@@ -4,10 +4,14 @@ module TableGo
       include RendererBase
 
       def render_template
-        content_tag(:table, table.table_html) do
-          concat(content_tag(:caption, table.title)) if table.title
-          concat(table_head)
-          concat(table_body)
+        if table.render_rows_only
+          table_rows
+        else
+          content_tag(:table, table.table_html) do
+            concat(content_tag(:caption, table.title)) if table.title
+            concat(table_head)
+            concat(table_body)
+          end
         end
       end
 
@@ -23,15 +27,19 @@ module TableGo
 
       def table_body
         content_tag(:tbody) do
-          table.collection.each do |record|
-             tr = content_tag(:tr, html_options_for_row(record)) do
-              table.columns.each do |column|
-                value = value_from_record_by_column(record, column)
-                concat(content_tag(:td, apply_formatter(record, column, value), html_options_for_cell(record, column, value)))
-              end
-             end
-             concat(tr)
-          end
+          table_rows
+        end
+      end
+
+      def table_rows
+        table.collection.each do |record|
+           tr = content_tag(:tr, html_options_for_row(record)) do
+            table.columns.each do |column|
+              value = value_from_record_by_column(record, column)
+              concat(content_tag(:td, apply_formatter(record, column, value), html_options_for_cell(record, column, value)))
+            end
+           end
+           concat(tr)
         end
       end
 

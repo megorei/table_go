@@ -57,5 +57,10 @@ module TableGo
       @row_html
     end
 
+    def render_rows_only(render_rows_only = nil)
+      @render_rows_only = render_rows_only if render_rows_only
+      @render_rows_only
+    end
+
   end
 end

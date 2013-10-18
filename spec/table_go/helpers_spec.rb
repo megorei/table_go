@@ -4,7 +4,6 @@ require 'spec_helper'
 ActionView::Base.send :include, TableGo::Helpers
 
 describe TableGo::Helpers do
-
   let(:articles) do
     [ Article.new(:title => 'iPutz',
         :date_of_order => Date.new(2012), :ident => 1, :vat => 19, :price => 5, :xmas_bonus => true,
@@ -18,7 +17,6 @@ describe TableGo::Helpers do
 
 
   describe 'integration in haml template' do
-
     let(:subject) do
       Haml::Engine.new(read_file_from_fixtures_path('simple_table.html.haml')).render(template, :articles => articles)
     end
@@ -55,8 +53,24 @@ describe TableGo::Helpers do
         <p>Pampe</p>
       ).cleanup_html
     end
+  end
 
+  describe 'integration in haml template for a table_rows_for' do
+    let(:subject) do
+      Haml::Engine.new(read_file_from_fixtures_path('only_rows.html.haml')).render(template, :articles => articles.first)
+    end
 
+    it "it should render in haml" do
+      subject.cleanup_html.should eql %Q(
+        <tr>
+          <td>1</td>
+          <td>Ident: 1 - Title: iPutz</td>
+          <td>Ident: 1 - Title: iPutz</td>
+          <td>Ident: 1</td>
+          <td><a href="http://nowhere.com">click me</a><br /><a href="http://otherwhere.com">and here</a></td>
+        </tr>
+      ).cleanup_html
+    end
   end
 
   # context 'speedtest' do
