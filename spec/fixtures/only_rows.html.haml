@@ -1,2 +1,2 @@
 = table_rows_for(articles, Article) do |t|
-  - render 'columns', :t => t
+  - t.column_template file_fixtures_path('_columns.html.haml')

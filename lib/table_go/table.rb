@@ -10,6 +10,7 @@ module TableGo
       @columns     = []
       apply_options!(options)
       evaluate_dsl!(block)
+      xxxx
     end
 
     def evaluate_dsl!(block)
@@ -21,6 +22,10 @@ module TableGo
           column(column_name)
         end
       end
+    end
+
+    def do_dsl
+      yield.call(self)
     end
 
     # def model_klass_reflection_keys
@@ -36,6 +41,9 @@ module TableGo
       options.each { |k, v| send(k, v) }
     end
 
+    def xxxx
+      column_template
+    end
 
 
     def column(name, options = {}, &block)
@@ -60,6 +68,11 @@ module TableGo
     def render_rows_only(render_rows_only = nil)
       @render_rows_only = render_rows_only if render_rows_only
       @render_rows_only
+    end
+
+    def column_template(column_template = nil)
+      @column_template = column_template if column_template
+      @column_template
     end
 
   end

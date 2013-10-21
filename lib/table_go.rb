@@ -18,7 +18,12 @@ module TableGo
   end
 
   def self.render(collection, model_klass, renderer_klass, template, options = {}, &block)
-    table     = Table.new(collection.respond_to?(:each) ? collection : [collection], model_klass, options, &block)
+    table     = Table.new((collection.respond_to?(:each) ? collection : [collection]), model_klass, options, &block)
+
+    if table.column_template
+      table.do_dsl { template.render table.column_template }
+    end
+
     renderer  = TableRenderer.new(table)
     renderer.renderer_klass = renderer_klass
     renderer.template       = template

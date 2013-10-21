@@ -5,6 +5,8 @@ require 'action_controller'
 require 'ostruct'
 require 'table_go'
 require 'haml'
+require 'haml/template/plugin'
+
 # require 'pry'
 
 RSpec.configure do |config|
@@ -33,12 +35,26 @@ class Article < OpenStruct
 end
 
 
-def read_file_from_fixtures_path(file)
-  File.read(File.dirname(__FILE__) + '/fixtures/%s' % file)
-end
 
 def action_view_instance
   ActionView::Base.new.tap do |view|
     view.output_buffer = ActiveSupport::SafeBuffer.new rescue ''
   end
 end
+
+
+
+def read_file_from_fixtures_path(file)
+  File.read(file_fixtures_path(file))
+end
+
+def file_fixtures_path(file)
+  File.dirname(__FILE__) + '/fixtures/%s' % file
+end
+
+def render_haml(file, template, locals)
+  Haml::Engine.new(read_file_from_fixtures_path(file)).render(template, locals)
+end
+
+
+ActionView::Template.register_template_handler(:haml, Haml::Plugin)

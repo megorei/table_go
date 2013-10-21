@@ -55,6 +55,7 @@ describe TableGo::Helpers do
     end
   end
 
+
   describe 'integration in haml template for a table_rows_for' do
     let(:subject) do
       Haml::Engine.new(read_file_from_fixtures_path('only_rows.html.haml')).render(template, :articles => articles.first)
@@ -73,11 +74,12 @@ describe TableGo::Helpers do
     end
   end
 
+
+
+
+
   # context 'speedtest' do
-
   #   let(:more_articles) { 1000.times.map { articles }.flatten }
-
-
   #   it 'should run fast' do
   #     puts Benchmark.measure {
   #       2.times do
@@ -85,7 +87,6 @@ describe TableGo::Helpers do
   #       end
   #     }
   #   end
-
   # end
 
 end

@@ -81,6 +81,7 @@ module TableGo
           # template.capture_haml { Formatter.apply(formatter, record, column, value )}
           # template.send(:capture_haml) { Formatter.apply(formatter, record, column, value )}
           string = nil
+          # debugger
           capture_view do
             string = Formatter.apply(formatter, record, column, value )
           end.presence || string # for compatibility to legacy haml "- t.column :ident"
@@ -126,6 +127,41 @@ module TableGo
         ensure
           haml_buffer.capture_position = nil
         end
+
+
+        # # stripped down ripoff from Haml's capture_haml, needed for speed
+        # def capture_haml(*args, &block)
+        #   # buffer = eval('if defined? _hamlout then _hamlout else nil end', block.binding) || haml_buffer
+        #   # buffer = haml_buffer
+        #   # with_haml_buffer(buffer) do
+        #     position = haml_buffer.buffer.length
+
+        #     haml_buffer.capture_position = position
+        #     block.call(*args)
+
+        #     # captured = haml_buffer.buffer.slice!(0..-1)
+        #     captured = haml_buffer.buffer.slice!(position..-1)
+        #     # return captured if haml_buffer.options[:ugly]
+
+        #     # debugger
+        #     # Note that the "reject" is needed for rbx 1.2.4, which includes empty
+        #     # strings in the returned array when splitting by /^/.
+        #     # captured = captured.split(/^/).reject {|x| x == ""}
+
+        #     # min_tabs = nil
+        #     # captured.each do |line|
+        #     #   tabs = line.index(/[^ ]/) || line.length
+        #     #   min_tabs ||= tabs
+        #     #   min_tabs = min_tabs > tabs ? tabs : min_tabs
+        #     # end
+
+        #     # captured.map do |line|
+        #     #   line.slice(min_tabs, line.length)
+        #     # end.join
+        #   # end
+        # ensure
+        #   haml_buffer.capture_position = nil
+        # end
 
 
         # def capture_haml(*args, &block)
