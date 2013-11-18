@@ -92,6 +92,29 @@ describe TableGo::Helpers do
     end
   end
 
+  describe 'integration in haml template for a table_go_for with options without_header "true"' do
+    let(:subject) do
+      Haml::Engine.new(read_file_from_fixtures_path('table_go_for_without_header.html.haml')).
+        render(template, :articles => articles.first)
+    end
+
+    it "it should render in haml" do
+      subject.cleanup_html.should eql %Q(
+        <table>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Ident: 1 - Title: iPutz</td>
+              <td>Ident: 1 - Title: iPutz</td>
+              <td>Ident: 1</td>
+              <td><a href="http://nowhere.com">click me</a><br /><a href="http://otherwhere.com">and here</a></td>
+            </tr>
+          </tbody>
+        </table>
+      ).cleanup_html
+    end
+  end
+
   # context 'speedtest' do
 
   #   let(:more_articles) { 1000.times.map { articles }.flatten }

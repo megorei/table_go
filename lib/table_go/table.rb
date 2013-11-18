@@ -62,9 +62,9 @@ module TableGo
       @render_rows_only
     end
 
-    def with_thead(with_thead = true)
-      @with_thead = with_thead if with_thead
-      @with_thead
+    def without_header(without_header = nil)
+      @without_header = without_header if without_header
+      @without_header
     end
   end
 end

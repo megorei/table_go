@@ -9,7 +9,7 @@ module TableGo
         else
           content_tag(:table, table.table_html) do
             concat(content_tag(:caption, table.title)) if table.title
-            concat(table_head) if table.with_thead
+            concat(table_head) unless table.without_header
             concat(table_body)
           end
         end

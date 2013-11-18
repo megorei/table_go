@@ -6,7 +6,7 @@ module TableGo
 
       def render_template
         ::FasterCSV.generate(:col_sep => ";", :row_sep => "\n", :force_quotes => true, :quote_char => '"') do |csv|
-          csv << table.columns.map { |column| label_for_column(column) } unless table.render_rows_only
+          csv << table.columns.map { |column| label_for_column(column) } unless table.render_rows_only || table.without_header
           table.collection.each do |record|
             csv << table.columns.map do |column|
               value = value_from_record_by_column(record, column)
