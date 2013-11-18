@@ -57,7 +57,26 @@ describe TableGo::Helpers do
 
   describe 'integration in haml template for a table_rows_for' do
     let(:subject) do
-      Haml::Engine.new(read_file_from_fixtures_path('only_rows.html.haml')).render(template, :articles => articles.first)
+      Haml::Engine.new(read_file_from_fixtures_path('table_rows_for.html.haml')).render(template, :articles => articles.first)
+    end
+
+    it "it should render in haml" do
+      subject.cleanup_html.should eql %Q(
+        <tr>
+          <td>1</td>
+          <td>Ident: 1 - Title: iPutz</td>
+          <td>Ident: 1 - Title: iPutz</td>
+          <td>Ident: 1</td>
+          <td><a href="http://nowhere.com">click me</a><br /><a href="http://otherwhere.com">and here</a></td>
+        </tr>
+      ).cleanup_html
+    end
+  end
+
+  describe 'integration in haml template for a table_go_for with options render_rows_only "true"' do
+    let(:subject) do
+      Haml::Engine.new(read_file_from_fixtures_path('table_go_for_with_only_rows.html.haml')).
+        render(template, :articles => articles.first)
     end
 
     it "it should render in haml" do
