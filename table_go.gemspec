@@ -9,6 +9,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{simple, flexible and fast html table generator}
   gem.summary       = %q{}
   gem.homepage      = 'http://github.com/megorei/table_go/'
+  gem.license       = 'MIT'
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }

@@ -57,5 +57,14 @@ module TableGo
       @row_html
     end
 
+    def render_rows_only(render_rows_only = nil)
+      @render_rows_only = render_rows_only if render_rows_only
+      @render_rows_only
+    end
+
+    def without_header(without_header = nil)
+      @without_header = without_header if without_header
+      @without_header
+    end
   end
 end
