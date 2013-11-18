@@ -78,6 +78,11 @@ example in HAML
 
 ## Changelog
 
+#### 0.2.4
+
+- new method: table_rows_for
+- table options: render_rows_only, without_header
+
 #### 0.2.3
 
 - speed optimisation for haml templates

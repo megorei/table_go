@@ -11,5 +11,9 @@ module TableGo
       end
     end
 
+    def table_rows_for(collection, model_klass, options = {}, &block)
+      table_go_for(collection, model_klass, options.merge(:render_rows_only => true), &block)
+    end
+
   end
 end
