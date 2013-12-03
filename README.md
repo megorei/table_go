@@ -78,6 +78,10 @@ example in HAML
 
 ## Changelog
 
+#### 0.2.5
+
+- fixed generate csv bug
+
 #### 0.2.4
 
 - new method: table_rows_for
