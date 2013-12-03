@@ -13,8 +13,8 @@ module TableGo
     render(collection, model_klass, Renderers::HtmlRenderer, template, options, &block)
   end
 
-  def self.render_csv(collection, model_klass, options = {}, &block)
-    render(collection, model_klass, Renderers::CsvRenderer, nil, options, &block)
+  def self.render_csv(collection, model_klass, template, options = {}, &block)
+    render(collection, model_klass, Renderers::CsvRenderer, template, options, &block)
   end
 
   def self.render(collection, model_klass, renderer_klass, template, options = {}, &block)
