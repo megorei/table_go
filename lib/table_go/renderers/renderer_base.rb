@@ -91,20 +91,20 @@ module TableGo
           template.is_haml? ? capture_haml { yield } : template.capture { yield }
         end
 
-        delegate :with_haml_buffer, :haml_buffer, :to => :template
+        #delegate :with_haml_buffer, :to => :template
 
         # stripped down ripoff from Haml's capture_haml, needed for speed
         def capture_haml(*args, &block)
           # buffer = eval('if defined? _hamlout then _hamlout else nil end', block.binding) || haml_buffer
           # buffer = haml_buffer
           # with_haml_buffer(buffer) do
-            position = haml_buffer.buffer.length
+            position = template.send(:haml_buffer).buffer.length
 
-            haml_buffer.capture_position = position
+          template.send(:haml_buffer).capture_position = position
             block.call(*args)
 
             # captured = haml_buffer.buffer.slice!(0..-1)
-            captured = haml_buffer.buffer.slice!(position..-1)
+            captured = template.send(:haml_buffer).buffer.slice!(position..-1)
             # return captured if haml_buffer.options[:ugly]
 
             # debugger
@@ -124,7 +124,7 @@ module TableGo
             # end.join
           # end
         ensure
-          haml_buffer.capture_position = nil
+          template.send(:haml_buffer).capture_position = nil
         end
 
 
