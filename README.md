@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-example in HAML
+example in HAML (or more here: http://table-go-example.exsemt.de/)
 
     = table_go_for @orders, Order, :title => 'one Table',
         :table_html => { :id => :the_table },
@@ -77,6 +77,10 @@ example in HAML
 
 
 ## Changelog
+
+#### 0.2.6
+
+- bugfixing
 
 #### 0.2.5
 
