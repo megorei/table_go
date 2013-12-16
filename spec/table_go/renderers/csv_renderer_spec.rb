@@ -25,7 +25,7 @@ describe TableGo::Renderers::CsvRenderer do
   end
 
   describe 'automatic mode without title row, render_rows_only => true' do
-    subject { TableGo.render_csv(articles, Article, {:render_rows_only => true}) }
+    subject { TableGo.render_csv(articles, Article, {}, {:render_rows_only => true}) }
 
     it 'should render a simple automatic csv table' do
       subject.cleanup_csv.should == %Q(
@@ -36,7 +36,7 @@ describe TableGo::Renderers::CsvRenderer do
   end
 
   describe 'automatic mode without_header => true' do
-    subject { TableGo.render_csv(articles, Article, {:without_header => true}) }
+    subject { TableGo.render_csv(articles, Article, {}, {:without_header => true}) }
 
     it 'should render a simple automatic csv table' do
       subject.cleanup_csv.should == %Q(
