@@ -78,6 +78,8 @@ example in HAML (or more here: http://table-go-example.exsemt.de/)
 
 ## Changelog
 
+- CSV compatibility for ruby 1.8 & 2...
+
 #### 0.2.6
 
 - bugfixing

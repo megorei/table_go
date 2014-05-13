@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 gem 'actionpack'
-gem 'fastercsv'
+gem 'fastercsv', :platforms => :mri_18
 
 group :development, :test do
   gem 'rspec'
