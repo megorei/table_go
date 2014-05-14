@@ -17,6 +17,10 @@ module TableGo
     render(collection, model_klass, Renderers::CsvRenderer, template, options, &block)
   end
 
+  def self.render_xlsx(collection, model_klass, template, options = {}, &block)
+    render(collection, model_klass, Renderers::XlsxRenderer, template, options, &block)
+  end
+
   def self.render(collection, model_klass, renderer_klass, template, options = {}, &block)
     table     = Table.new(collection.respond_to?(:each) ? collection : [collection], model_klass, options, &block)
     renderer  = TableRenderer.new(table)

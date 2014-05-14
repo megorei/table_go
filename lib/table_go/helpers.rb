@@ -5,6 +5,8 @@ module TableGo
       capture do
         if request && request.format.csv?
           TableGo.render_csv(collection, model_klass, self, options, &block).html_safe
+        elsif request && request.format.xlsx?
+          TableGo.render_xlsx(collection, model_klass, self, options, &block).html_safe
         else
           TableGo.render_html(collection, model_klass, self, options, &block)
         end
