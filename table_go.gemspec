@@ -19,6 +19,7 @@ Gem::Specification.new do |gem|
   gem.version       = TableGo::VERSION
 
   gem.add_dependency 'actionpack'
+  gem.add_dependency 'actionview'
   gem.add_dependency 'fastercsv' if RUBY_VERSION < '1.9'
   gem.add_dependency 'activesupport'
 

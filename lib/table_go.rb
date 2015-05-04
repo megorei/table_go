@@ -1,4 +1,8 @@
 require 'table_go/version'
+require 'active_support/inflector'
+require 'active_support/core_ext/string'
+require 'active_support/concern'
+require 'action_view'
 
 module TableGo
   autoload :Table, 'table_go/table'
@@ -7,7 +11,7 @@ module TableGo
   autoload :Renderers, 'table_go/renderers'
   autoload :Formatter, 'table_go/formatter'
   autoload :Helpers, 'table_go/helpers'
-
+  autoload :Orm, 'table_go/orm'
 
   def self.render_html(collection, model_klass, template, options = {}, &block)
     render(collection, model_klass, Renderers::HtmlRenderer, template, options, &block)

@@ -3,6 +3,7 @@ PATH
   specs:
     table_go (0.2.6)
       actionpack
+      actionview
       activesupport
 
 GEM
