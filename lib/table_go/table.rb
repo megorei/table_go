@@ -17,7 +17,7 @@ module TableGo
         # instance_eval(&block)
         block.call(self)
       else
-        attribute_names_from_model_klass.each do |column_name|
+        TableGo::Orm.attribute_names_from_model_klass(model_klass).each do |column_name|
           column(column_name)
         end
       end
@@ -26,11 +26,6 @@ module TableGo
     # def model_klass_reflection_keys
     #   @model_klass_reflection_keys ||= model_klass.reflections.keys
     # end
-
-
-    def attribute_names_from_model_klass
-      model_klass.respond_to?(:column_names) ? model_klass.column_names : []
-    end
 
     def apply_options!(options)
       options.each { |k, v| send(k, v) }

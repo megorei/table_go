@@ -35,11 +35,7 @@ module TableGo
     end
 
     def human_attribute_name
-      if table.model_klass.respond_to?(:human_attribute_name) # using rails default I18n
-        table.model_klass.human_attribute_name(name).html_safe
-      else
-        name.to_s.humanize
-      end
+      TableGo::Orm.human_attribute_name(table.model_klass, name) || name.to_s.humanize
     end
 
   end
